@@ -8,3 +8,6 @@ CLAUDE.md
 .env
 .env.local
 .env.*.local
+
+# Local EmailJS config (not committed)
+client/src/lib/emailjs-config.local.ts

@@ -35,7 +35,7 @@ export function Footer() {
             <ul className="space-y-4 text-blue-100">
               <li className="flex items-center space-x-3">
                 <Phone className="h-5 w-5 opacity-70" />
-                <span>089 1234 5678</span>
+                <span>02191 5657580</span>
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 opacity-70" />
@@ -43,7 +43,7 @@ export function Footer() {
               </li>
               <li className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 opacity-70 mt-1" />
-                <span>Versicherungsstraße 1<br/>80331 München</span>
+                <span>Kölner Straße 231<br/>42897 Remscheid</span>
               </li>
             </ul>
           </div>
@@ -67,7 +67,7 @@ export function Footer() {
         </div>
 
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-blue-300">
-          <p>© 2024 Allianzagentur Läutek. Alle Rechte vorbehalten.</p>
+          <p>© 2026 Allianzagentur Läutek. Alle Rechte vorbehalten.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
             <Link href="#" className="hover:text-white transition-colors">Impressum</Link>
             <Link href="#" className="hover:text-white transition-colors">Datenschutz</Link>

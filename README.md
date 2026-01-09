@@ -1,214 +1,280 @@
 # Allianz Dog Insurance - Static Website
 
-A modern, static website for Allianz dog insurance lead generation, deployable to GitHub Pages.
+A modern landing page with a 7-step quiz for collecting dog insurance leads. Sends emails to both the agency and customers automatically.
 
-## Features
+## Quick Start (5 Minutes)
 
-- 7-step interactive quiz for collecting dog insurance leads
-- Email notifications via EmailJS (to agency and customer confirmation)
-- Fully responsive design with Allianz branding
-- Tailwind CSS + shadcn/ui components
-- Framer Motion animations
-- No backend required - completely static
-
-## Prerequisites
-
-- Node.js 20.19+ or 22.12+ (for Vite 7)
-- npm 10+
-- EmailJS account (free tier: 200 emails/month)
-
-## Setup Instructions
-
-### 1. Install Dependencies
+### Option 1: With Conda (Recommended for Python Users)
 
 ```bash
+# 1. Create conda environment with Node.js
+conda create -n allianz-dog nodejs=20 -c conda-forge -y
+conda activate allianz-dog
+
+# 2. Navigate to project and install
+cd c:/python_work/git/Allianz-Dog
 npm install
-```
 
-**Note:** If you encounter npm errors, try:
-```bash
-rm -rf node_modules package-lock.json
-npm install
-```
-
-### 2. Configure EmailJS
-
-1. Sign up at [EmailJS.com](https://www.emailjs.com/)
-2. Add an email service (Gmail, Outlook, or SMTP)
-3. Create two email templates:
-
-   **Admin Notification Template:**
-   - Template Name: "New Dog Insurance Lead"
-   - Subject: `New Dog Insurance Lead: {{dog_name}}`
-   - Body: Include variables for all form fields (see `.env.example`)
-   - To Email: `agentur.laeutek@allianz.de`
-
-   **Customer Confirmation Template:**
-   - Template Name: "Thank You - Dog Insurance Inquiry"
-   - Subject: `Vielen Dank für Ihr Interesse an Hundekrankenversicherung`
-   - Body: Personalized thank you message using `{{first_name}}` and `{{dog_name}}`
-   - To Email: `{{to_email}}` (customer's email)
-   - Reply-To: `agentur.laeutek@allianz.de`
-
-4. Copy Service ID, Template IDs, and Public Key
-
-### 3. Set Environment Variables
-
-Create a `.env.local` file in the project root:
-
-```bash
-cp .env.example .env.local
-```
-
-Edit `.env.local` with your EmailJS credentials:
-
-```env
-VITE_EMAILJS_SERVICE_ID=your_service_id
-VITE_EMAILJS_ADMIN_TEMPLATE_ID=your_admin_template_id
-VITE_EMAILJS_CUSTOMER_TEMPLATE_ID=your_customer_template_id
-VITE_EMAILJS_PUBLIC_KEY=your_public_key
-```
-
-### 4. Local Development
-
-```bash
+# 3. Start the website
 npm run dev
 ```
 
-The site will be available at `http://localhost:5173`
+Open http://localhost:5173 🎉
 
-### 5. Build for Production
+### Option 2: With System Node.js
 
-```bash
-npm run build
-```
-
-Output will be in the `dist/` directory.
-
-### 6. Preview Production Build
+If you have Node.js 20+ already installed:
 
 ```bash
-npm run preview
+cd c:/python_work/git/Allianz-Dog
+npm install
+npm run dev
 ```
 
-## GitHub Pages Deployment
+## What You Get
+
+- ✅ **Landing page** with hero section, trust badges, reviews
+- ✅ **7-step quiz** to collect customer information
+- ✅ **Email notifications** to agency + customer confirmation
+- ✅ **Responsive design** for mobile, tablet, desktop
+- ✅ **Allianz branding** with corporate colors
+- ✅ **Free hosting** on GitHub Pages
+- ✅ **No backend** needed - completely static
+
+## Making Changes
+
+All code is in `client/src/`:
+
+| File | What It Does |
+|------|-------------|
+| `pages/Home.tsx` | Landing page content |
+| `components/Header.tsx` | Top navigation bar |
+| `components/Footer.tsx` | Footer with contact info |
+| `components/QuizWizard.tsx` | The 7-step quiz form |
+
+**Changes auto-reload!** Save a file and see it instantly in your browser.
+
+## Enable Email Sending
+
+Right now emails won't send (needs setup). To enable:
+
+### 1. Create EmailJS Account (Free)
+
+Go to https://www.emailjs.com/ and sign up (200 emails/month free)
+
+### 2. Add Email Service
+
+- Click "Add Email Service"
+- Connect Gmail, Outlook, or any email
+- Save the service
+
+### 3. Create 2 Email Templates
+
+**Template 1: Admin Notification**
+- Name: "New Dog Insurance Lead"
+- Subject: `New Dog Insurance Lead: {{dog_name}}`
+- Recipient: `agentur.laeutek@allianz.de`
+- Body: Include all lead details (see template variables below)
+
+**Template 2: Customer Confirmation**
+- Name: "Thank You Message"
+- Subject: `Vielen Dank für Ihr Interesse, {{first_name}}!`
+- Recipient: `{{to_email}}` (customer's email)
+- Body: Personalized thank you message
+
+**Template Variables to Use:**
+```
+{{dog_name}}
+{{first_name}}
+{{last_name}}
+{{email}}
+{{phone}}
+{{dog_breed}}
+{{dog_age}}
+{{coverage_amount}}
+{{monthly_budget}}
+{{termination_protection}}
+{{to_email}}
+```
+
+### 4. Copy Your Credentials
+
+In EmailJS dashboard:
+- Find **Service ID** (e.g., `service_abc123`)
+- Find **Template IDs** for both templates
+- Find **Public Key** (Account → API Keys)
+
+### 5. Update .env.local
+
+Edit `.env.local` file in the project root:
+
+```env
+VITE_EMAILJS_SERVICE_ID=service_abc123
+VITE_EMAILJS_ADMIN_TEMPLATE_ID=template_xyz789
+VITE_EMAILJS_CUSTOMER_TEMPLATE_ID=template_def456
+VITE_EMAILJS_PUBLIC_KEY=your_public_key
+```
+
+### 6. Restart Dev Server
+
+```bash
+# Stop server (Ctrl+C)
+# Start again
+npm run dev
+```
+
+Now try the quiz - emails will actually send! 📧
+
+## Deploy to GitHub Pages
 
 ### One-Time Setup
 
-1. Push your code to a GitHub repository
-2. Go to repository **Settings > Pages**
-3. Under "Build and deployment", select **Source: GitHub Actions**
-4. Add your EmailJS credentials to **Settings > Secrets and variables > Actions**:
-   - `VITE_EMAILJS_SERVICE_ID`
-   - `VITE_EMAILJS_ADMIN_TEMPLATE_ID`
-   - `VITE_EMAILJS_CUSTOMER_TEMPLATE_ID`
-   - `VITE_EMAILJS_PUBLIC_KEY`
+**1. Enable GitHub Pages**
+- Go to your repo on GitHub
+- Settings → Pages
+- Source: **GitHub Actions** (important!)
 
-### Automatic Deployment
+**2. Add Secrets**
+- Settings → Secrets and variables → Actions
+- Click "New repository secret"
+- Add all 4 EmailJS credentials:
+  - `VITE_EMAILJS_SERVICE_ID`
+  - `VITE_EMAILJS_ADMIN_TEMPLATE_ID`
+  - `VITE_EMAILJS_CUSTOMER_TEMPLATE_ID`
+  - `VITE_EMAILJS_PUBLIC_KEY`
 
-The GitHub Actions workflow (`.github/workflows/deploy.yml`) will automatically:
-- Build the site on every push to `main`
-- Deploy to GitHub Pages
-- Your site will be live at: `https://yourusername.github.io/Allianz-Dog/`
+**3. Push to GitHub**
 
-### Custom Domain (Optional)
+```bash
+git add .
+git commit -m "Initial deployment"
+git push origin main
+```
 
-1. Add a `CNAME` file to `client/public/` with your domain
-2. Configure DNS settings with your domain provider
-3. Enable custom domain in GitHub Pages settings
+**4. Wait for Deployment**
+- Go to "Actions" tab on GitHub
+- Watch the deployment (takes ~2 minutes)
+- Your site is live at: `https://yourusername.github.io/Allianz-Dog/`
+
+### Auto-Deployment
+
+Every time you push to `main`, GitHub automatically:
+1. Builds your site
+2. Deploys to GitHub Pages
+3. Updates live within 2 minutes
+
+## Common Commands
+
+```bash
+# Activate conda environment (if using conda)
+conda activate allianz-dog
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+
+# Check for TypeScript errors
+npm run check
+```
+
+## Common Tasks
+
+### Change Contact Email
+Edit `client/src/components/Footer.tsx` - Line 42
+
+### Change Phone Number
+Edit `client/src/components/Footer.tsx` - Line 38
+
+### Modify Quiz Questions
+Edit `client/src/components/QuizWizard.tsx`
+
+### Change Colors
+Edit `tailwind.config.ts` or update Tailwind classes in components
+
+### Add New Page
+1. Create file in `client/src/pages/YourPage.tsx`
+2. Add route in `client/src/App.tsx`
 
 ## Project Structure
 
 ```
 Allianz-Dog/
-├── client/                  # Frontend source code
+├── client/                      # Your website code
 │   ├── src/
-│   │   ├── components/     # React components
-│   │   ├── hooks/          # Custom hooks
-│   │   ├── lib/            # Utilities and schemas
-│   │   ├── pages/          # Page components
-│   │   └── index.css       # Global styles
-│   ├── public/             # Static assets
-│   └── index.html          # HTML template
-├── .github/workflows/      # GitHub Actions
-├── dist/                   # Build output (gitignored)
-├── .env.example            # Environment variables template
-├── .env.local              # Your credentials (gitignored)
-├── package.json            # Dependencies
-├── vite.config.ts          # Vite configuration
-├── tailwind.config.ts      # Tailwind CSS config
-└── tsconfig.json           # TypeScript config
+│   │   ├── components/         # Reusable components
+│   │   │   ├── Header.tsx
+│   │   │   ├── Footer.tsx
+│   │   │   ├── QuizWizard.tsx
+│   │   │   └── ui/             # 50+ UI components
+│   │   ├── pages/
+│   │   │   └── Home.tsx        # Landing page
+│   │   ├── hooks/              # Custom React hooks
+│   │   ├── lib/                # Utils and validation
+│   │   └── index.css           # Global styles
+│   ├── public/                 # Static files
+│   └── index.html
+├── .github/workflows/          # Auto-deployment config
+├── dist/                       # Built website (auto-generated)
+├── .env.local                  # Your EmailJS credentials
+└── README.md                   # This file
 ```
-
-## Available Scripts
-
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Build for production |
-| `npm run preview` | Preview production build |
-| `npm run check` | Type-check TypeScript |
-
-## EmailJS Template Variables
-
-### Admin Notification Template
-
-Use these variables in your EmailJS admin template:
-
-- `{{dog_name}}` - Dog's name
-- `{{termination_protection}}` - "important" or "not_important"
-- `{{coverage_amount}}` - "unlimited", "800", "400", or "0"
-- `{{monthly_budget}}` - "30-60", "60-80", "80-100", or "100-120"
-- `{{dog_age}}` - "0-2", "3", "4", "5", "6", "7-9", or "10+"
-- `{{dog_breed}}` - Dog's breed
-- `{{first_name}}` - Customer first name
-- `{{last_name}}` - Customer last name
-- `{{email}}` - Customer email
-- `{{phone}}` - Customer phone
-- `{{to_email}}` - Always "agentur.laeutek@allianz.de"
-
-### Customer Confirmation Template
-
-- `{{first_name}}` - Customer first name
-- `{{dog_name}}` - Dog's name
-- `{{to_email}}` - Customer's email
-- `{{reply_to}}` - Customer's email (for reply-to)
 
 ## Troubleshooting
 
 ### npm install fails
 
-If you see errors like "ERR_INVALID_ARG_TYPE", try:
-1. Update Node.js to version 20.19+ or 22.12+
-2. Update npm: `npm install -g npm@latest`
-3. Clear cache: `npm cache clean --force`
-4. Delete `node_modules` and `package-lock.json`, then reinstall
+**Windows:**
+```bash
+rmdir /s /q node_modules
+del package-lock.json
+npm install
+```
 
-### Build fails
-
-1. Make sure all environment variables are set in `.env.local`
-2. Check TypeScript errors: `npm run check`
-3. Clear Vite cache: `rm -rf node_modules/.vite`
+**Mac/Linux:**
+```bash
+rm -rf node_modules package-lock.json
+npm install
+```
 
 ### Emails not sending
 
-1. Verify EmailJS credentials in `.env.local`
-2. Check EmailJS dashboard for quota limits (free tier: 200/month)
-3. Check browser console for errors
-4. Verify template IDs match in EmailJS dashboard
+1. ✅ Check `.env.local` has correct EmailJS credentials
+2. ✅ Check EmailJS dashboard - might have hit free tier limit (200/month)
+3. ✅ Check browser console (F12) for error messages
+4. ✅ Verify template IDs match in EmailJS dashboard
 
-### GitHub Pages not deploying
+### Site not updating on GitHub Pages
 
-1. Ensure GitHub Pages is enabled (Settings > Pages > Source: GitHub Actions)
-2. Check that GitHub secrets are set correctly
-3. View workflow runs in the "Actions" tab for error details
+1. Go to "Actions" tab - check for deployment errors
+2. Verify GitHub secrets are set correctly
+3. Try pushing an empty commit: `git commit --allow-empty -m "Trigger deploy"`
+
+### Changes not showing in browser
+
+1. Hard refresh: `Ctrl+Shift+R` (Windows) or `Cmd+Shift+R` (Mac)
+2. Check dev server is running
+3. Clear browser cache
+
+## Tech Stack
+
+- **React 18** - UI framework
+- **TypeScript** - Type safety
+- **Tailwind CSS** - Styling
+- **shadcn/ui** - UI components
+- **Framer Motion** - Animations
+- **EmailJS** - Email delivery
+- **Vite** - Build tool
+- **GitHub Pages** - Hosting
 
 ## Support
 
-For issues or questions:
-- Email: agentur.laeutek@allianz.de
-- Phone: 089 1234 5678
+**Email:** agentur.laeutek@allianz.de
+**Phone:** 02191 5657580
+**Address:** Kölner Straße 231, 42897 Remscheid
 
 ## License
-
-MIT
