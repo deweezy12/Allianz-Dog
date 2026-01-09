@@ -11,41 +11,19 @@ export function useCreateLead() {
       // Validate with schema first to be safe
       const validated = insertLeadSchema.parse(data);
 
-      // Get EmailJS configuration from environment variables
-      // In production (GitHub Pages): these come from GitHub Secrets
-      // In development: these will be undefined, so use fallback in emailjs-config.local.ts
+      // Get EmailJS configuration from environment variables (GitHub Secrets)
       const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
       const adminTemplateId = import.meta.env.VITE_EMAILJS_ADMIN_TEMPLATE_ID;
       const customerTemplateId = import.meta.env.VITE_EMAILJS_CUSTOMER_TEMPLATE_ID;
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
-      // If env vars are undefined (local dev), try to load local config
-      let config;
-      if (!serviceId || !publicKey) {
-        // Only import local config if env vars are missing (development only)
-        try {
-          const localModule = await import("./emailjs-config.local");
-          config = localModule.EMAILJS_LOCAL_CONFIG;
-        } catch {
-          throw new Error("EmailJS configuration missing. Check environment variables or emailjs-config.local.ts");
-        }
-      } else {
-        // Use environment variables (production)
-        config = {
-          SERVICE_ID: serviceId,
-          ADMIN_TEMPLATE_ID: adminTemplateId,
-          CUSTOMER_TEMPLATE_ID: customerTemplateId,
-          PUBLIC_KEY: publicKey,
-        };
-      }
-
       // Initialize EmailJS with your public key
-      emailjs.init(config.PUBLIC_KEY);
+      emailjs.init(publicKey);
 
       // Send email to admin (agentur.laeutek@allianz.de)
       await emailjs.send(
-        config.SERVICE_ID,
-        config.ADMIN_TEMPLATE_ID,
+        serviceId,
+        adminTemplateId,
         {
           dog_name: validated.dogName,
           termination_protection: validated.terminationProtection,
@@ -63,8 +41,8 @@ export function useCreateLead() {
 
       // Send confirmation email to customer
       await emailjs.send(
-        config.SERVICE_ID,
-        config.CUSTOMER_TEMPLATE_ID,
+        serviceId,
+        customerTemplateId,
         {
           first_name: validated.firstName,
           dog_name: validated.dogName,
