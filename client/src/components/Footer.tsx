@@ -39,7 +39,7 @@ export function Footer() {
               </li>
               <li className="flex items-center space-x-3">
                 <Mail className="h-5 w-5 opacity-70" />
-                <span>service@laeutek.allianz.de</span>
+                <span>agentur.laeutek@allianz.de</span>
               </li>
               <li className="flex items-start space-x-3">
                 <MapPin className="h-5 w-5 opacity-70 mt-1" />

@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { cn } from "@/lib/utils";
-import { insertLeadSchema } from "@shared/schema";
+import { insertLeadSchema } from "@/lib/schema";
 import { useCreateLead } from "@/hooks/use-leads";
 
 // Steps definition
