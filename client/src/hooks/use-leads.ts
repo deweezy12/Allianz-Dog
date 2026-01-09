@@ -11,18 +11,31 @@ export function useCreateLead() {
       // Validate with schema first to be safe
       const validated = insertLeadSchema.parse(data);
 
-      // Try to load local config (development), fallback to env vars (production)
+      // Get EmailJS configuration from environment variables
+      // In production (GitHub Pages): these come from GitHub Secrets
+      // In development: these will be undefined, so use fallback in emailjs-config.local.ts
+      const serviceId = import.meta.env.VITE_EMAILJS_SERVICE_ID;
+      const adminTemplateId = import.meta.env.VITE_EMAILJS_ADMIN_TEMPLATE_ID;
+      const customerTemplateId = import.meta.env.VITE_EMAILJS_CUSTOMER_TEMPLATE_ID;
+      const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
+
+      // If env vars are undefined (local dev), try to load local config
       let config;
-      try {
-        const localModule = await import("@/lib/emailjs-config.local");
-        config = localModule.EMAILJS_LOCAL_CONFIG;
-      } catch {
-        // Local config doesn't exist (production), use environment variables
+      if (!serviceId || !publicKey) {
+        // Only import local config if env vars are missing (development only)
+        try {
+          const localModule = await import("./emailjs-config.local");
+          config = localModule.EMAILJS_LOCAL_CONFIG;
+        } catch {
+          throw new Error("EmailJS configuration missing. Check environment variables or emailjs-config.local.ts");
+        }
+      } else {
+        // Use environment variables (production)
         config = {
-          SERVICE_ID: import.meta.env.VITE_EMAILJS_SERVICE_ID,
-          ADMIN_TEMPLATE_ID: import.meta.env.VITE_EMAILJS_ADMIN_TEMPLATE_ID,
-          CUSTOMER_TEMPLATE_ID: import.meta.env.VITE_EMAILJS_CUSTOMER_TEMPLATE_ID,
-          PUBLIC_KEY: import.meta.env.VITE_EMAILJS_PUBLIC_KEY,
+          SERVICE_ID: serviceId,
+          ADMIN_TEMPLATE_ID: adminTemplateId,
+          CUSTOMER_TEMPLATE_ID: customerTemplateId,
+          PUBLIC_KEY: publicKey,
         };
       }
 
