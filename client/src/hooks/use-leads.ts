@@ -17,39 +17,59 @@ export function useCreateLead() {
       const customerTemplateId = import.meta.env.VITE_EMAILJS_CUSTOMER_TEMPLATE_ID;
       const publicKey = import.meta.env.VITE_EMAILJS_PUBLIC_KEY;
 
+      // Debug logging to check if env vars are loaded
+      console.log('EmailJS Config Check:', {
+        hasServiceId: !!serviceId,
+        hasAdminTemplateId: !!adminTemplateId,
+        hasCustomerTemplateId: !!customerTemplateId,
+        hasPublicKey: !!publicKey,
+        serviceIdPreview: serviceId?.substring(0, 10),
+        publicKeyPreview: publicKey?.substring(0, 10)
+      });
+
       // Initialize EmailJS with your public key
       emailjs.init(publicKey);
 
-      // Send email to admin (agentur.laeutek@allianz.de)
-      await emailjs.send(
-        serviceId,
-        adminTemplateId,
-        {
-          dog_name: validated.dogName,
-          termination_protection: validated.terminationProtection,
-          coverage_amount: validated.coverageAmount,
-          monthly_budget: validated.monthlyBudget,
-          dog_age: validated.dogAge,
-          dog_breed: validated.dogBreed,
-          first_name: validated.firstName,
-          last_name: validated.lastName,
-          email: validated.email,
-          phone: validated.phone,
-          to_email: "agentur.laeutek@allianz.de",
-        }
-      );
+      try {
+        // Send email to admin (agentur.laeutek@allianz.de)
+        console.log('Sending admin email...');
+        await emailjs.send(
+          serviceId,
+          adminTemplateId,
+          {
+            dog_name: validated.dogName,
+            termination_protection: validated.terminationProtection,
+            coverage_amount: validated.coverageAmount,
+            monthly_budget: validated.monthlyBudget,
+            dog_age: validated.dogAge,
+            dog_breed: validated.dogBreed,
+            first_name: validated.firstName,
+            last_name: validated.lastName,
+            email: validated.email,
+            phone: validated.phone,
+            to_email: "agentur.laeutek@allianz.de",
+          }
+        );
+        console.log('✅ Admin email sent successfully');
 
-      // Send confirmation email to customer
-      await emailjs.send(
-        serviceId,
-        customerTemplateId,
-        {
-          first_name: validated.firstName,
-          dog_name: validated.dogName,
-          to_email: validated.email,
-          reply_to: validated.email,
-        }
-      );
+        // Send confirmation email to customer
+        console.log('Sending customer confirmation email...');
+        await emailjs.send(
+          serviceId,
+          customerTemplateId,
+          {
+            first_name: validated.firstName,
+            dog_name: validated.dogName,
+            to_email: validated.email,
+            reply_to: validated.email,
+          }
+        );
+        console.log('✅ Customer email sent successfully');
+      } catch (error) {
+        console.error('❌ Email send failed:', error);
+        console.error('Error details:', JSON.stringify(error, null, 2));
+        throw error;
+      }
 
       return validated;
     },
