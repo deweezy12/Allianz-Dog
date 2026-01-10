@@ -1,4 +1,4 @@
-import { ShieldCheck, Phone, Mail, MapPin } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
 import { Link } from "wouter";
 
 export function Footer() {
@@ -9,8 +9,12 @@ export function Footer() {
           
           {/* Brand Column */}
           <div className="space-y-6">
-            <div className="flex items-center space-x-2">
-              <ShieldCheck className="h-8 w-8 text-blue-300" />
+            <div className="flex items-center space-x-3">
+              <img
+                src="/Allianz-Dog/allianz.png"
+                alt="Allianz Logo"
+                className="h-10 w-auto"
+              />
               <span className="text-2xl font-display font-bold">Allianzagentur Läutek</span>
             </div>
             <p className="text-blue-100 leading-relaxed max-w-xs">
@@ -22,10 +26,10 @@ export function Footer() {
           <div>
             <h3 className="text-lg font-semibold mb-6 text-white">Versicherungen</h3>
             <ul className="space-y-4 text-blue-100">
-              <li><Link href="#" className="hover:text-white transition-colors">Hundekrankenversicherung</Link></li>
-              <li><Link href="#" className="hover:text-white transition-colors">Hundehaftpflicht</Link></li>
-              <li><Link href="#" className="hover:text-white transition-colors">Katzenkrankenversicherung</Link></li>
-              <li><Link href="#" className="hover:text-white transition-colors">OP-Schutz</Link></li>
+              <li><Link href="/hundekrankenversicherung" className="hover:text-white transition-colors">Hundekrankenversicherung</Link></li>
+              <li><Link href="/hundehaftpflicht" className="hover:text-white transition-colors">Hundehaftpflicht</Link></li>
+              <li><Link href="/katzenkrankenversicherung" className="hover:text-white transition-colors">Katzenkrankenversicherung</Link></li>
+              <li><Link href="/op-schutz" className="hover:text-white transition-colors">OP-Schutz</Link></li>
             </ul>
           </div>
 
@@ -69,9 +73,9 @@ export function Footer() {
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-blue-300">
           <p>© 2026 Allianzagentur Läutek. Alle Rechte vorbehalten.</p>
           <div className="flex space-x-6 mt-4 md:mt-0">
-            <Link href="#" className="hover:text-white transition-colors">Impressum</Link>
-            <Link href="#" className="hover:text-white transition-colors">Datenschutz</Link>
-            <Link href="#" className="hover:text-white transition-colors">AGB</Link>
+            <Link href="/impressum" className="hover:text-white transition-colors">Impressum</Link>
+            <Link href="/datenschutz" className="hover:text-white transition-colors">Datenschutz</Link>
+            <Link href="/agb" className="hover:text-white transition-colors">AGB</Link>
           </div>
         </div>
       </div>

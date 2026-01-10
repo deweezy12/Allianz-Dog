@@ -1,4 +1,4 @@
-import { ShieldCheck, Phone } from "lucide-react";
+import { Phone } from "lucide-react";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 
@@ -8,11 +8,12 @@ export function Header() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2 group cursor-pointer">
-            <div className="relative">
-              <div className="absolute inset-0 bg-blue-100 rounded-full scale-0 group-hover:scale-110 transition-transform duration-300" />
-              <ShieldCheck className="h-9 w-9 text-[#003781] relative z-10" />
-            </div>
+          <Link href="/" className="flex items-center space-x-3 group cursor-pointer">
+            <img
+              src="/Allianz-Dog/allianz.png"
+              alt="Allianz Logo"
+              className="h-12 w-auto transition-transform duration-300 group-hover:scale-105"
+            />
             <div className="flex flex-col">
               <span className="font-display font-bold text-xl leading-none text-[#003781]">Allianz</span>
               <span className="text-sm text-slate-500 font-medium leading-none mt-0.5 tracking-wide">Agentur Läutek</span>
@@ -21,9 +22,9 @@ export function Header() {
 
           {/* Desktop Nav */}
           <nav className="hidden md:flex items-center space-x-8">
-            <Link href="#" className="text-slate-600 font-medium hover:text-[#003781] transition-colors">Vorteile</Link>
-            <Link href="#" className="text-slate-600 font-medium hover:text-[#003781] transition-colors">Tarife</Link>
-            <Link href="#" className="text-slate-600 font-medium hover:text-[#003781] transition-colors">Über Uns</Link>
+            <Link href="/vorteile" className="text-slate-600 font-medium hover:text-[#003781] transition-colors">Vorteile</Link>
+            <Link href="/tarife" className="text-slate-600 font-medium hover:text-[#003781] transition-colors">Tarife</Link>
+            <Link href="/ueber-uns" className="text-slate-600 font-medium hover:text-[#003781] transition-colors">Über Uns</Link>
           </nav>
 
           {/* CTA */}
